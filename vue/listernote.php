@@ -10,6 +10,14 @@
         </li>
         <?php endforeach; ?>
     </ul>
+
+    <div class="pagination">
+        <?php for($i =1; $i<=$view['data']['nbPage']; $i++): ?>
+        <a href="index.php?a=lister&c=note&page=<?php echo $i ?>"><?php echo $i ?></a>
+
+            <?php endfor; ?>
+    </div>
+
     <?php endif; ?>
 </div>
 <div class="bouton">

@@ -5,7 +5,28 @@ function lister()
 {
     global $a, $c;
 
-    $data['notes'] = getAllNotes();
+    $totaleNotes = countNote();
+
+    $nombreDePages=ceil($totaleNotes['total']/3);
+
+    if(isset($_GET['page']))
+    {
+        $pageActuelle=intval($_GET['page']);
+
+        if($pageActuelle>$nombreDePages)
+        {
+            $pageActuelle=$nombreDePages;
+        }
+    }
+    else
+    {
+        $pageActuelle=1;
+    }
+
+    $premiereEntree=($pageActuelle-1)*5;
+
+    $data['notes'] = getAllNotes($premiereEntree);
+    $data['nbPage'] = $nombreDePages;
 
     $html = $a . $c . '.php';
     $view = array('data' => $data, 'html' => $html);
