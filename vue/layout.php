@@ -27,7 +27,7 @@
     Mes notes
 </div>
 <div class="content">
-    <?php include('./vue/' . $a . $c . '.php'); ?>
+    <?php include($view['html']); ?>
 </div>
 </body>
 

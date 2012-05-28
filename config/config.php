@@ -1,18 +1,18 @@
 <?php
 
-$valideActions = array(
-    'lister'=>'lister',
-    'voir'=>'voir',
-    'modifier'=>'modifier',
-    'ajouter'=>'ajouter',
-    'supprimer'=>'supprimer');
-$valideControlleur = array('note'=>'note');
+require_once 'DB.php';
+require_once './controlleur/MainController.php';
+require_once './controlleur/NoteController.php';
 
-define('DEFAULT_ACTIONS', $valideActions['lister']);
-define('DEFAULT_CONTROLLEUR', $valideControlleur['note']);
+define(DB::DRIVER, 'mysql');
+define(DB::HOST, 'localhost');
+define(DB::NAME, 'notes');
+define(DB::USER, 'root');
+define(DB::PASSWORD, 'root');
+
+define(MainController::DEFAULT_CONTROLLER, NoteController::getName());
+define(MainController::DEFAULT_ACTION, NoteController::getDefaultAction());
+
 define ('DEFAULT_PAGE', 3);
 
-$options = array(
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-);
+$connected = TRUE;
