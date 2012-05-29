@@ -10,4 +10,4 @@ require_once './controlleur/MainController.php';
 
 $view = MainController::route();
 
-include('./vues/layout.php');
+include('./vue/layout.php');

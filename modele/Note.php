@@ -114,7 +114,8 @@ final class Note extends AbstractModel
         //global $connexion;
 
         $req = 'SELECT COUNT(*) AS total FROM ' . self::TABLE;
-        $totaleNotes = $this->fetchAll($req);
+        $totaleNotes = $this->fetch($req);
+        //$totaleNotes = $this->fetchAll($req);
 
         /*try
        {
