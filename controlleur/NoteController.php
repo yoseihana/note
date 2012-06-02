@@ -48,7 +48,8 @@ final class NoteController extends AbstractController
 
         $data = array(
             'view_title'=> 'Liste des notes',
-            'notes'     => $this->note->getAll($premiereEntree)
+            'notes'     => $this->note->getAll($premiereEntree),
+            'nbPage'    => $nombreDePages
         );
 
         return array('data'=> $data, 'html'=> MainController::getLastViewFileName());
@@ -76,16 +77,15 @@ final class NoteController extends AbstractController
         if ($this->isPost())
         {
             $note = array(
-                Note::DATE_PARUTION => $this->getParameter('date_parution'),
+                Note::DATE_PARUTION => date('Y-m-d'),
                 Note::TITRE         => $this->getParameter('titre'),
-                Note::NOTE          => $this->getParameter('note')
+                Note::NOTE          => $this->getParameter('note'),
+                Note::ID            => $id
             );
 
-            DB::getPdoInstance()->beginTransaction();
             $this->note->update($note);
-            DB::getPdoInstance()->commit();
 
-            header('Location :' . Url::voirNote($this->getParameter('id')));
+            header('Location: ' . Url::voirNote($id));
         }
         elseif ($this->isGet())
         {
@@ -107,10 +107,7 @@ final class NoteController extends AbstractController
 
         if ($this->isPost())
         {
-            DB::getPdoInstance()->beginTransaction();
             $this->note->delete($id);
-            DB::getPdoInstance()->commit();
-
             header('Location: ' . Url::listerNote());
         }
         elseif ($this->isGet())
@@ -123,6 +120,7 @@ final class NoteController extends AbstractController
 
             return array('data'=> $data, 'html'=> MainController::getLastViewFileName());
         }
+
     }
 
     public function ajouter()
@@ -130,16 +128,14 @@ final class NoteController extends AbstractController
         if ($this->isPost())
         {
             $note = array(
-                Note::DATE_PARUTION => date('Y-m-d'),
+                Note::DATE_PARUTION => date('Y,m,d'),
                 Note::NOTE          => $this->getParameter('note'),
                 Note::TITRE         => $this->getParameter('titre')
             );
 
-            DB::getPdoInstance()->beginTransaction();
             $this->note->add($note);
-            DB::getPdoInstance()->commit();
 
-            header('Location: ' . Url::voirNote($this->getParameter('id')));
+            header('Location: ' . Url::listerNote());
         }
         elseif ($this->isGet())
         {

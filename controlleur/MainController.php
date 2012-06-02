@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: annabelle
- * Date: 28/05/12
- * Time: 12:01
- * To change this template use File | Settings | File Templates.
- */
+
 require_once 'NoteController.php';
 
 abstract class MainController
 {
-    const DEFAULT_ACTION = 'def_action';
     const DEFAULT_CONTROLLER = 'def_controller';
+    const DEFAULT_ACTION = 'def_action';
 
     private static $lastController;
     private static $lastAction;
@@ -19,46 +13,48 @@ abstract class MainController
     //Routage
     public static function route()
     {
+        // Define the controller and the action where route to.
         if (isset($_REQUEST['a']) && isset($_REQUEST['c']))
         {
-            self::$lastAction = $_REQUEST['a'];
             self::$lastController = $_REQUEST['c'];
+            self::$lastAction = $_REQUEST['a'];
         }
         else
         {
-            self::$lastAction = constant(self::DEFAULT_ACTION);
             self::$lastController = constant(self::DEFAULT_CONTROLLER);
+            self::$lastAction = constant(self::DEFAULT_ACTION);
         }
 
-        //Récupèrer le nom supposer de la class pour le controller demander
+        // Get supposed controller class name from controller name
         $lastControllerClass = AbstractController::getClassName(self::$lastController);
 
         if (!class_exists($lastControllerClass, false))
         {
-            die('Il n\'y a pas de controlleur pour "' . self::$lastController . '"');
+            die('Il n\'y a pas de controller trouver pour "' . self::$lastController . '".');
         }
 
-        //Changement du $lastControllerClass
+        //Changement, passe d'un string à un objet instancier de la dernière classe
         $lastControllerClass = new $lastControllerClass;
 
-        //Vérifie si le nom de la class controller est un controlleur valide
+        // Check if controller class name (above) is a valid controller (extends AbstractController)
         if (!($lastControllerClass instanceof AbstractController))
         {
-            die('Il n\'y a pas de controlleur valide pour "' . self::$lastController . '"');
+            die('Il n\'y a pas de controller valide pour "' . self::$lastController . '".');
         }
 
-        //Récupèration des actions disponibles du controlleur
-        $avaibleActions = call_user_func(array(
+        // Retrieve all valid action for the given controller
+        $availableActions = call_user_func(array(
             $lastControllerClass,
-            'getAvailableActions'
+            'getAvailableActions' // Method inherited from AbstractController
         ));
 
-        if (!in_array(self::getLastAction(), $avaibleActions))
+        // Check if requested action is available for the requested controller
+        if (!in_array(self::getLastAction(), $availableActions))
         {
-            die('Il n\'y a pas d\'action pour "' . self::$lastAction .
-                '" au controlleur "' . self::$lastController . '"');
+            die ('Aucune action "' . self::$lastAction . '" pour le controller "' . self::$lastController . '"');
         }
 
+        // Call the requested method from the requested controller  /!\ Trés important!
         return call_user_func(array(
             $lastControllerClass,
             self::$lastAction
@@ -72,11 +68,12 @@ abstract class MainController
 
     public static function getLastController()
     {
-        return self::getLastController();
+        return self::$lastController;
     }
 
     public static function getLastViewFileName()
     {
         return strtolower(self::$lastAction . self::$lastController . '.php');
     }
+
 }

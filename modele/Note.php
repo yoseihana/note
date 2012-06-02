@@ -52,7 +52,6 @@ final class Note extends AbstractModel
 
         $req = 'INSERT INTO ' . self::TABLE . ' VALUES(null, :date_parution, :note, :titre)';
         $param = array(
-            ':id'           => $data[self::ID],
             ':date_parution'=> $data[self::DATE_PARUTION],
             ':note'         => $data[self::NOTE],
             ':titre'        => $data[self::TITRE]
@@ -83,12 +82,14 @@ final class Note extends AbstractModel
     public function update(array $data)
     {
 
-        $req = 'UPDATE ' . self::TABLE . ' SET ' . self::NOTE . '= :note, ' . self::TITRE . '= :titre WHERE ' . self::ID . '= :id';
+        $req = 'UPDATE ' . self::TABLE . ' SET ' . self::NOTE . '= :note, ' . self::TITRE . '= :titre, ' . self::DATE_PARUTION . ' =:date_parution WHERE ' . self::ID . '= :id';
         $param = array(
-            ':note' => $data[self::NOTE],
-            ':titre'=> $data[self::TITRE],
-            ':id'   => $data[self::ID]
+            ':note'          => $data[self::NOTE],
+            ':titre'         => $data[self::TITRE],
+            ':id'            => $data[self::ID],
+            ':date_parution' => $data[self::DATE_PARUTION]
         );
+
         return $this->execute($req, $param);
     }
 
