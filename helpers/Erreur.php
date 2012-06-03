@@ -52,4 +52,9 @@ final class Erreur
     {
         return Erreur::build('erreurParam');
     }
+
+    public static function erreurId()
+    {
+        return Erreur::build(('erreurId'));
+    }
 }

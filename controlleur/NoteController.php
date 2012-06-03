@@ -151,7 +151,8 @@ final class NoteController extends AbstractController
     {
         if ($this->note->countNoteById($id) < 1)
         {
-            die('L\'id "' . $id . '" fourni n\'existe pas dans la base de donnée');
+            //die('L\'id "' . $id . '" fourni n\'existe pas dans la base de donnée');
+            Erreur::erreurId();
         }
 
         return true;

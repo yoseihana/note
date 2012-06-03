@@ -5,9 +5,10 @@
         <li>
             <h2><a href="<?php echo Url::voirNote($note[Note::ID]); ?>"><?php echo($note[Note::TITRE]); ?></a>
                 - <?php echo($note[Note::DATE_PARUTION]); ?></h2>
-
+            <?php if (MainController::isAuthenticated()): ?>
             <p><a href="<?php echo Url::modifierNote($note[Note::ID]); ?>">Modifier</a>
                 - <a href="<?php echo Url::supprimerNote($note[Note::ID]); ?>">Supprimer</a></p>
+            <?php endif; ?>
         </li>
         <?php endforeach; ?>
     </ul>

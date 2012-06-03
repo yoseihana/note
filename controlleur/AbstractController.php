@@ -64,9 +64,10 @@ abstract class AbstractController
 
         if (!isset($param))
         {
-            die('Paramètre manquant: "' . $paramKey .
-                '" pour l\'action ' . MainController::getLastAction() .
-                ' et pour le controlleur ' . MainControlleur::getLastController());
+            /* die('Paramètre manquant: "' . $paramKey .
+   '" pour l\'action ' . MainController::getLastAction() .
+   ' et pour le controlleur ' . MainControlleur::getLastController());  */
+            Erreur::erreurParam();
         }
 
         return $param;

@@ -24,10 +24,28 @@
 </head>
 <body>
 <div class="header">
-    Mes notes
+    <?php if (MainController::isAuthenticated()): ?>
+    <p>
+        Mes notes : vous êtes connecté
+
+    </p>
+    <?php else: ?>
+    <p>Mes notes: vous n'êtes pas conecté</p>
+    <?php endif; ?>
 </div>
 <div class="content">
     <?php include($view['html']); ?>
+</div>
+<div class="footer">
+    <?php if (!MainController::isAuthenticated()): ?>
+    <p>
+        <a href="<?php echo Url::connexionMembre(); ?>">Connexion</a> - Annabelle Buffart - Mai 2012
+    </p>
+    <?php else: ?>
+    <p>
+        <a href="<?php echo Url::deconnexionMembre(); ?>">Deconnexion</a> - Annabelle Buffart - Mai 2012
+    </p>
+    <?php endif; ?>
 </div>
 </body>
 

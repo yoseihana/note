@@ -4,7 +4,7 @@
     <h2>
         Modifier la note du <?php echo $view['data']['note'][Note::DATE_PARUTION]; ?>
     </h2>
-
+    <?php if (MainController::isAuthenticated()): ?>
     <form action="<?php echo ($_SERVER['PHP_SELF']);?>" method='POST'>
         <fieldset>
             <label for="titre">
@@ -23,4 +23,14 @@
             <input type="hidden" name="id" value="<?php echo ($view['data']['note'][Note::ID]); ?>"/>
         </fieldset>
     </form>
+    <?php else: ?>
+    <p>Vous devez vous connecter pour acceder à cette page.</p>
+    <?php endif; ?>
 </div>
+<?php if (!MainController::isAuthenticated()): ?>
+<div class="bouton">
+    <p>
+        <a href="<?php echo Url::connexionMembre(); ?>">Se connecter</a>
+    </p>
+</div>
+<?php endif; ?>

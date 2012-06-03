@@ -83,7 +83,7 @@ abstract class AbstractModel
      */
     private function _PDOExcptionGestion(PDOException $e)
     {
-        if ($this->connection()->inTransaction())
+        if ($this->connection->inTransaction())
         {
             $this->connection->rollBack();
         }
