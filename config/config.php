@@ -12,7 +12,3 @@ define(DB::PASSWORD, 'root');
 
 define(MainController::DEFAULT_CONTROLLER, NoteController::getName());
 define(MainController::DEFAULT_ACTION, NoteController::getDefaultAction());
-
-define ('DEFAULT_PAGE', 3);
-
-$connected = TRUE;
